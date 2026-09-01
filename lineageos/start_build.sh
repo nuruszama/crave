@@ -32,13 +32,6 @@ curl -sfLo vendorextract.sh -z vendorextract.sh https://raw.githubusercontent.co
 chmod +x vendorextract.sh
 ./vendorextract.sh
 
-# dynamically inject features.mk into device tree
-cat << 'EOF' > device/xiaomi/creek/features.mk
-# Inherit gapps configurations
-\$(call inherit-product, vendor/gapps/arm64/arm64-vendor.mk)
-
-EOF
-
 # setup build env
 source build/envsetup.sh
 
