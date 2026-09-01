@@ -2,10 +2,6 @@
 
 clear
 
-# Reset all local modifications and delete untracked/generated files
-repo forall -c "git reset --hard HEAD"
-repo forall -c "git clean -fd"
-
 # Maintainer and Host Info
 export BUILD_USERNAME="nuruszama"
 export BUILD_HOSTNAME="creek"
@@ -25,7 +21,7 @@ rm -rf device/xiaomi/creek
 # re-initialize the lineage source
 repo init -u https://github.com/LineageOS/android.git -b lineage-23.2 --git-lfs --depth=1
 
-#clone local manifest
+# clone local manifest
 git clone https://github.com/XiaomiCreek/android.git -b lineage-23.2 --depth=1 .repo/local_manifests
 
 # resync the repo source
@@ -45,12 +41,6 @@ EOF
 
 # setup build env
 source build/envsetup.sh
-
-# remove intermediates files with seapp
-find out/soong/.intermediates -type d -name "*seapp*" -exec rm -rf {} +
-
-# change modified date to make soong start again
-touch device/xiaomi/creek/BoardConfig.mk
 
 # prepare device menu
 breakfast creek userdebug
