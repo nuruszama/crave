@@ -11,19 +11,16 @@ export BUILD_USERNAME="nuruszama"
 export BUILD_HOSTNAME="creek"
 
 # Custom Build Tag
-export TARGET_UNOFFICIAL_BUILD_ID="TFAS-Edition"
-export LINEAGE_BUILDTYPE="TFAS-Edition"
+export LINEAGE_BUILDTYPE="TFAS"
 
 # Build Optimizations & Checks
 export SKIP_ABI_CHECKS=true
 export WITH_DEXPREOPT=true
-export WITH_UNLIMITED_PHOTOS=true
-
-# Custom OTA Updater URL
-export OTA_URL="https://xiaomicreek.github.io/OTA/LOS/builds/creek.json"
 
 # remove device tree
 rm -rf .repo/local_manifests
+rm -rf vendor/xiaomi/creek
+rm -rf device/xiaomi/creek
 
 # re-initialize the lineage source
 repo init -u https://github.com/LineageOS/android.git -b lineage-23.2 --git-lfs --depth=1
@@ -40,22 +37,11 @@ chmod +x vendorextract.sh
 ./vendorextract.sh
 
 # dynamically inject features.mk into device tree
-cat << EOF > device/xiaomi/creek/features.mk
-# OTA url for future updates
-PRODUCT_SYSTEM_DEFAULT_PROPERTIES += lineage.updater.uri=${OTA_URL}
-
-# Inherit FastCharge configurations
-\$(call inherit-product, packages/apps/FastCharge/fastcharge.mk)
-
+cat << 'EOF' > device/xiaomi/creek/features.mk
 # Inherit gapps configurations
 \$(call inherit-product, vendor/gapps/arm64/arm64-vendor.mk)
 
 EOF
-
-# Injecting PixelPropsUtils to frameworks/base
-curl -sfLo unlimited_photos.sh -z unlimited_photos.sh https://raw.githubusercontent.com/nuruszama/crave/creek/features/unlimited_photos.sh
-chmod +x unlimited_photos.sh
-./unlimited_photos.sh
 
 # setup build env
 source build/envsetup.sh
