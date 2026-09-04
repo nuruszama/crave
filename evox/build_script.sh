@@ -14,6 +14,8 @@ export WITH_DEXPREOPT=true
 
 # remove device tree
 rm -rf .repo/local_manifests
+rm -rf hardware/qcom-caf/common
+rm -rf vendor/xiaomi/creek-kernel
 rm -rf vendor/xiaomi/creek
 rm -rf device/xiaomi/creek
 
