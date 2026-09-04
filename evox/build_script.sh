@@ -5,8 +5,8 @@ clear
 # Maintainer and Host Info
 export BUILD_USERNAME="nuruszama"
 export BUILD_HOSTNAME="creek"
-export EVO_MAINTAINER="nuruszama"
-export EVO_BUILDTYPE="COMMUNITY-BUILD"
+export MAINTAINER="nuruszama"
+export CURRENTLY_MAINTAINED="true"
 
 # Build Optimizations & Checks
 export SKIP_ABI_CHECKS=true
