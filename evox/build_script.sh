@@ -51,13 +51,8 @@ fi
 # Setup build env
 source build/envsetup.sh
 
-# Extract vendor tree (checks device directory first)
-if [ -f "device/xiaomi/creek/vendorextract.sh" ]; then
-    echo "==> Running vendorextract.sh from device tree..."
-    bash device/xiaomi/creek/vendorextract.sh
-elif [ -f "./vendorextract.sh" ]; then
-    ./vendorextract.sh
-fi
+# Extract vendor tree
+./vendorextract.sh
 
 # Prepare device menu
 breakfast creek userdebug
