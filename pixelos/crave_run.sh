@@ -30,9 +30,6 @@ git clone https://github.com/XiaomiCreek/android.git -b lineage-23.2 --depth=1 .
 # resync the repo source
 /opt/crave/resync.sh
 
-# Adapt device tree from LineageOS to PixelOS
-curl -sf https://raw.githubusercontent.com/nuruszama/crave/creek/pixelos/pixelos_changes.sh | bash
-
 # setup build env
 source build/envsetup.sh
 
@@ -50,7 +47,7 @@ echo "uploading file..."
 ROM_DIR="out/target/product/creek/"
 ZIP_FILE=$(ls "$ROM_DIR" | grep "PixelOS-creek-*.zip$" | tail -n 1)
 if [ -n "${ZIP_FILE}" ]; then
-    curl -sfLo upload.sh -z upload.sh https://raw.githubusercontent.com/nuruszama/crave/creek/tools/pd-upload.sh
+    curl -sfLo upload.sh -z upload.sh https://raw.githubusercontent.com/nuruszama/crave/creek/tools/sf-upload.sh
     chmod +x upload.sh ; ./upload.sh "${ROM_DIR}${ZIP_FILE}"
     echo "upload done!"
 else
