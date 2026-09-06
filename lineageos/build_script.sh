@@ -1,6 +1,26 @@
 #!/bin/bash
 
+# ==============================================================================
+# LineageOS Multi-Variant Build Matrix
+# Variants: EROFS Vanilla, EXT4 Vanilla, EROFS GApps
+# ==============================================================================
+
+set -e # Exit immediately if a command or build step fails
 clear
+
+# Array of target variants: "FS_TYPE GAPPS_BUILD"
+VARIANTS=(
+    "erofs vanilla"
+    "ext4 vanilla"
+    "erofs gapps"
+)
+
+# Export constant variables for all runs
+export SF_USER="nuruszama"
+export SF_PROJECT="xiaomicreek"
+export ANDROID_VER="16"
+export ROM_NAME="LineageOS"
+export SSH_KEY="$HOME/.ssh/id_ed25519"
 
 # Maintainer and Host Info
 export BUILD_USERNAME="nuruszama"
@@ -27,41 +47,64 @@ git clone https://github.com/XiaomiCreek/android.git -b lineage-23.2 --depth=1 .
 # resync the repo source
 repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags
 
-# extract vendor tree
-curl -sfLo vendorextract.sh -z vendorextract.sh https://raw.githubusercontent.com/nuruszama/crave/creek/tools/vendorextract.sh
+# Extract vendor tree
+curl -sfLo vendorextract.sh https://raw.githubusercontent.com/nuruszama/crave/creek/tools/vendorextract.sh
 chmod +x vendorextract.sh
 ./vendorextract.sh
 
-# setup build env
-source build/envsetup.sh
+for VARIANT in "${VARIANTS[@]}"; do
+    read -r FS_TYPE GAPPS_CHOICE <<< "$VARIANT"
+    
+    echo ""
+    echo " STARTING BUILD: FS=${FS_TYPE^^} | TYPE=${GAPPS_CHOICE^^}"
+    echo ""
+    
+    # Export flags read by your Lineage device tree / overlay config
+    if [ "$FS_TYPE" == "erofs" ]; then
+        export WITH_EROFS=true
+    else
+        export WITH_EROFS=false
+    fi
+    
+    if [ "$GAPPS_CHOICE" == "gapps" ]; then
+        export WITH_GAPPS=true
+    else
+        export WITH_GAPPS=false
+    fi
 
-# prepare device menu
-breakfast creek userdebug
+    # Make build name unique (e.g. erofs-vanilla, ext4-vanilla, erofs-gapps)
+    export LINEAGE_BUILDTYPE="${FS_TYPE}-${GAPPS_CHOICE}"
 
-# Clean staging dirs
-make installclean
+    # setup build env
+    source build/envsetup.sh
 
-# start building
-mka bacon
+    # prepare device menu
+    breakfast creek userdebug
 
-# Export environment variables for the upload script
-export SF_USER="nuruszama"
-export SF_PROJECT="xiaomicreek"
-export ANDROID_VER="16"
-export ROM_NAME="LineageOS"
+    # Clean staging dirs
+    make installclean
 
-# Custom SSH key location (if using a different key or path)
-export SSH_KEY="$HOME/.ssh/id_ed25519"
+    # start building
+    mka bacon
 
-# Upload
-echo "uploading file..."
-ROM_DIR="out/target/product/creek/"
-ZIP_FILE=$(ls "$ROM_DIR" | grep "lineage-creek-*.zip$" | tail -n 1)
-if [ -n "${ZIP_FILE}" ]; then
-    curl -sfLo upload.sh -z upload.sh https://raw.githubusercontent.com/nuruszama/crave/creek/tools/sf-upload.sh
-    chmod +x upload.sh ; ./upload.sh "${ROM_DIR}${ZIP_FILE}"
-    echo "upload done!"
-else
-    echo "no zip found at out/ dir..."
-    exit 1
-fi
+    # Upload
+    echo "uploading file..."
+    ROM_DIR="out/target/product/creek/"
+    ZIP_FILE=$(ls "$ROM_DIR" | grep "lineage-creek-*.zip$" | tail -n 1)
+    if [ -n "${ZIP_FILE}" ]; then
+        curl -sfLo upload.sh https://raw.githubusercontent.com/nuruszama/crave/creek/tools/sf-upload.sh
+        chmod +x upload.sh
+        ./upload.sh "${ROM_DIR}/${ZIP_FILE}"
+        echo "Upload done for ${FS_TYPE}-${GAPPS_CHOICE}!"
+        
+        # Clean uploaded zip to preserve workspace disk space
+        rm -f "${ROM_DIR}/${ZIP_FILE}"
+    else
+        echo "no zip found at out/ dir..."
+        exit 1
+    fi
+done
+
+clear
+rm -rf out
+echo "All variants built and uploaded successfully!"
