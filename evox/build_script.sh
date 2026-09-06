@@ -63,11 +63,14 @@ make installclean
 # Start building
 m evolution
 
-# Defining variables for upload
+# Export environment variables for the upload script
 export SF_USER="nuruszama"
 export SF_PROJECT="xiaomicreek"
-export ROM_NAME="EvolutionX"
 export ANDROID_VER="16"
+export ROM_NAME="EvolutionX"
+
+# Custom SSH key location (if using a different key or path)
+export SSH_KEY="$HOME/.ssh/id_ed25519"
 
 # Upload
 echo "uploading file..."
@@ -75,7 +78,7 @@ ROM_DIR="out/target/product/creek/"
 ZIP_FILE=$(ls "$ROM_DIR" | grep "EvolutionX-*.zip$" | tail -n 1)
 if [ -n "${ZIP_FILE}" ]; then
     curl -sfLo upload.sh -z upload.sh https://raw.githubusercontent.com/nuruszama/crave/creek/tools/sf-upload.sh
-    chmod +x upload.sh ; ./upload.sh "${ROM_DIR}${ZIP_FILE} "$ANDROID_VER" "$ROM_NAME""
+    chmod +x upload.sh ; ./upload.sh "${ROM_DIR}${ZIP_FILE}"
     echo "upload done!"
 else
     echo "no zip found at out/ dir..."
