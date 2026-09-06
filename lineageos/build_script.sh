@@ -67,9 +67,9 @@ for VARIANT in "${VARIANTS[@]}"; do
     fi
     
     if [ "$GAPPS_CHOICE" == "gapps" ]; then
-        export WITH_GAPPS=true
+        export WITH_GMS=true
     else
-        export WITH_GAPPS=false
+        export WITH_GMS=false
     fi
 
     # Make build name unique (e.g. erofs-vanilla, ext4-vanilla, erofs-gapps)
