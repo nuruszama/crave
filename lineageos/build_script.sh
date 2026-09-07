@@ -11,14 +11,16 @@ clear
 # Array of target variants: "FS_TYPE GAPPS_BUILD"
 VARIANTS=(
     "erofs vanilla"
-    "ext4 vanilla"
     "erofs gapps"
+    "ext4 vanilla"
+    "ext4 gapps"
 )
 
 # Export constant variables for all runs
 export SF_USER="nuruszama"
 export SF_PROJECT="xiaomicreek"
 export ANDROID_VER="16"
+export LINEAGE_VER="23.2"
 export ROM_NAME="LineageOS"
 export SSH_KEY="$HOME/.ssh/id_ed25519"
 
@@ -27,7 +29,7 @@ export BUILD_USERNAME="nuruszama"
 export BUILD_HOSTNAME="creek"
 
 # Custom Build Tag
-export RELEASE_TYPE="RELEASE"
+export RELEASE_TYPE="quarterly"
 
 # Build Optimizations & Checks
 export SKIP_ABI_CHECKS=true
@@ -103,8 +105,8 @@ for VARIANT in "${VARIANTS[@]}"; do
     UPDATER_FILE="packages/apps/Updater/app/src/main/res/values/strings.xml"
     if [ -f "$UPDATER_FILE" ]; then
         echo "==> Patching Updater URL for ${FS_TYPE}-${GAPPS_CHOICE}..."
-        TARGET_URL="raw.githubusercontent.com/XiaomiCreek/api/lineage-23.2/${FS_TYPE}-${GAPPS_CHOICE}/devices"
-        sed -i "s|download.lineageos.org/api/v2/devices|${TARGET_URL}|g" "$UPDATER_FILE"
+        TARGET_URL="raw.githubusercontent.com/XiaomiCreek/OTA/lineage-23.2/builds/{device}-${FS_TYPE}-${GAPPS_CHOICE}.json"
+        sed -i "s|download.lineageos.org/api/v2/devices/{device}/builds|${TARGET_URL}|g" "$UPDATER_FILE"
     fi
 
     # setup build env
@@ -122,7 +124,7 @@ for VARIANT in "${VARIANTS[@]}"; do
     # Upload
     echo "uploading file..."
     ROM_DIR="out/target/product/creek/"
-    ZIP_FILE=$(ls "$ROM_DIR" | grep "lineage-creek-*.zip$" | tail -n 1)
+    ZIP_FILE=$(ls "$ROM_DIR" 2>/dev/null | grep -E "^lineage-${LINEAGE_VER}-.*creek\.zip$" | tail -n 1)
     if [ -n "${ZIP_FILE}" ]; then
         curl -sfLo upload.sh https://raw.githubusercontent.com/nuruszama/crave/creek/tools/sf-upload.sh
         chmod +x upload.sh
