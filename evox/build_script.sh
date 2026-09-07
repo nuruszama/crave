@@ -29,9 +29,9 @@ trap cleanup_updater EXIT
 
 # Remove local manifest and device/vendor trees to allow fresh local_manifest sync
 rm -rf .repo/local_manifests
-rm -rf vendor/xiaomi/creek-kernel
 rm -rf vendor/xiaomi/creek
 rm -rf device/xiaomi/creek
+rm -rf device/xiaomi/creek-kernel
 
 # Re-initialize the source
 repo init -u https://github.com/Evolution-X/manifest -b bka --git-lfs --depth=1
