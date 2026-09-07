@@ -73,7 +73,9 @@ for VARIANT in "${VARIANTS[@]}"; do
     read -r FS_TYPE GAPPS_CHOICE <<< "$VARIANT"
     
     echo ""
+    echo "=================================================="
     echo " STARTING BUILD: FS=${FS_TYPE^^} | TYPE=${GAPPS_CHOICE^^}"
+    echo "=================================================="
     echo ""
     
     # Export flags read by your Lineage device tree / overlay config
@@ -136,5 +138,4 @@ for VARIANT in "${VARIANTS[@]}"; do
 done
 
 clear
-rm -rf out
 echo "All variants built and uploaded successfully!"
