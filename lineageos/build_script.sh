@@ -103,7 +103,7 @@ for VARIANT in "${VARIANTS[@]}"; do
     UPDATER_FILE="packages/apps/Updater/app/src/main/res/values/strings.xml"
     if [ -f "$UPDATER_FILE" ]; then
         echo "==> Patching Updater URL for ${FS_TYPE}-${GAPPS_CHOICE}..."
-        TARGET_URL="raw.githubusercontent.com/XiaomiCreek/api/main/${FS_TYPE}-${GAPPS_CHOICE}/devices"
+        TARGET_URL="raw.githubusercontent.com/XiaomiCreek/api/lineage-23.2/${FS_TYPE}-${GAPPS_CHOICE}/devices"
         sed -i "s|download.lineageos.org/api/v2/devices|${TARGET_URL}|g" "$UPDATER_FILE"
     fi
 
