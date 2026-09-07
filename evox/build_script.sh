@@ -75,7 +75,7 @@ export SSH_KEY="$HOME/.ssh/id_ed25519"
 # Upload
 echo "uploading file..."
 ROM_DIR="out/target/product/creek/"
-ZIP_FILE=$(ls "$ROM_DIR" | grep "EvolutionX-*.zip$" | tail -n 1)
+ZIP_FILE=$(ls "$ROM_DIR" | grep "${ROM_NAME}-.*.zip$" | tail -n 1)
 if [ -n "${ZIP_FILE}" ]; then
     curl -sfLo upload.sh -z upload.sh https://raw.githubusercontent.com/nuruszama/crave/creek/tools/sf-upload.sh
     chmod +x upload.sh ; ./upload.sh "${ROM_DIR}${ZIP_FILE}"
