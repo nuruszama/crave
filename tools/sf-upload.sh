@@ -6,9 +6,9 @@
 # ==============================================================================
 
 # SourceForge Credentials & Keys (Overridden via environment variables if set)
-SF_USER="${SF_USER:-nuruszama}"
-SF_PROJECT="${SF_PROJECT:-xiaomicreek}"
-SSH_KEY="${SSH_KEY:-$HOME/.ssh/id_ed25519}"
+SF_USER="${SF_USER:-myuser}"                    #change with your username
+SF_PROJECT="${SF_PROJECT:-myproject}"            #change with your projectname
+SSH_KEY="${SSH_KEY:-$HOME/.ssh/id_ed25519}"        #change with your ssh key
 KNOWN_HOSTS="$HOME/.ssh/known_hosts"
 
 # Auto-detect Termux vs Standard Linux/macOS
@@ -19,7 +19,7 @@ else
 fi
 
 # Help / Usage check
-if [ -z "$1" ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
+if [ -z "$1" ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] || [ "$SF_USER" = "myuser" ] || [ "$SF_PROJECT" = "myproject" ]; then
     echo "Usage: ./upload.sh <file_path> [Android_Version] [ROM_Name]"
     echo ""
     echo "Examples:"
@@ -40,8 +40,8 @@ fi
 
 FILE_NAME=$(basename "$FILE_PATH")
 
-# 1. Android Version: Passed Arg ($2) -> Environment Var ($ANDROID_VER) -> Default (16)
-ANDROID_VER="${2:-${ANDROID_VER:-16}}"
+# 1. Android Version: Passed Arg ($2) -> Environment Var ($ANDROID_VER) -> Default (0)
+ANDROID_VER="${2:-${ANDROID_VER:-0}}"
 
 # 2. ROM Name: Passed Arg ($3) -> Environment Var ($ROM_NAME) -> Auto-detect -> Default (LineageOS)
 if [ -n "$3" ]; then
@@ -50,7 +50,7 @@ elif [ -z "$ROM_NAME" ]; then
     if [[ "$FILE_NAME" =~ [eE]volution|[eE]vo ]]; then ROM_NAME="EvolutionX";
     elif [[ "$FILE_NAME" =~ [lL]ineage|[lL]os ]]; then ROM_NAME="LineageOS";
     elif [[ "$FILE_NAME" =~ [pP]ixel ]]; then ROM_NAME="PixelOS";
-    else ROM_NAME="LineageOS";
+    else ROM_NAME="Unknown";
     fi
 fi
 
