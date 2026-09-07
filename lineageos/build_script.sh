@@ -33,10 +33,27 @@ export RELEASE_TYPE="RELEASE"
 export SKIP_ABI_CHECKS=true
 export WITH_DEXPREOPT=true
 
-# remove device tree
+# Clean up qcom-caf hardware repo without deleting it
+if [ -d "hardware/qcom-caf/common" ]; then
+    echo "==> Resetting hardware/qcom-caf/common..."
+    git -C hardware/qcom-caf/common checkout . 2>/dev/null || true
+    git -C hardware/qcom-caf/common clean -fd 2>/dev/null || true
+fi
+
+# Ensure git cleanup always runs even if the build is interrupted or fails
+cleanup_updater() {
+    echo "==> Restoring original Updater strings.xml..."
+    if [ -d "packages/apps/Updater" ]; then
+        git -C packages/apps/Updater checkout app/src/main/res/values/strings.xml 2>/dev/null || true
+    fi
+}
+trap cleanup_updater EXIT
+
+# Remove local manifest and device/vendor trees to allow fresh local_manifest sync
 rm -rf .repo/local_manifests
 rm -rf vendor/xiaomi/creek
 rm -rf device/xiaomi/creek
+rm -rf device/xiaomi/creek-kernel
 
 # re-initialize the lineage source
 repo init -u https://github.com/LineageOS/android.git -b lineage-23.2 --git-lfs --depth=1
@@ -74,6 +91,19 @@ for VARIANT in "${VARIANTS[@]}"; do
 
     # Make build name unique (e.g. erofs-vanilla, ext4-vanilla, erofs-gapps)
     export LINEAGE_BUILDTYPE="${FS_TYPE}-${GAPPS_CHOICE}"
+
+    # Reset strings.xml so sed can find the original string every loop
+    if [ -d "packages/apps/Updater" ]; then
+        git -C packages/apps/Updater checkout app/src/main/res/values/strings.xml 2>/dev/null || true
+    fi
+    
+    # Dynamically patch the Updater URL with variable expansion and pipe delimiters
+    UPDATER_FILE="packages/apps/Updater/app/src/main/res/values/strings.xml"
+    if [ -f "$UPDATER_FILE" ]; then
+        echo "==> Patching Updater URL for ${FS_TYPE}-${GAPPS_CHOICE}..."
+        TARGET_URL="raw.githubusercontent.com/XiaomiCreek/api/main/${FS_TYPE}-${GAPPS_CHOICE}/devices"
+        sed -i "s|download.lineageos.org/api/v2/devices|${TARGET_URL}|g" "$UPDATER_FILE"
+    fi
 
     # setup build env
     source build/envsetup.sh
