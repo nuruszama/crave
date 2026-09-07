@@ -20,14 +20,18 @@ fi
 
 # Help / Usage check
 if [ -z "$1" ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] || [ "$SF_USER" = "myuser" ] || [ "$SF_PROJECT" = "myproject" ]; then
-    echo "Usage: ./upload.sh <file_path> [Android_Version] [ROM_Name]"
     echo ""
-    echo "Examples:"
-    echo "  ./upload.sh LineageOS-16-20260906-creek.zip"
-    echo "  ./upload.sh build.zip 16 EvolutionX"
+    echo "============================================================================"
+    echo "    Usage: ./upload.sh <file_path> [Android_Version] [ROM_Name]"
     echo ""
-    echo "Environment Overrides:"
-    echo "  SF_USER=myuser SF_PROJECT=myproject ANDROID_VER=16 ROM_NAME=EvolutionX ./upload.sh file.zip"
+    echo "    Examples:"
+    echo "      ./upload.sh LineageOS-16-20260906-creek.zip"
+    echo "      ./upload.sh build.zip 16 EvolutionX"
+    echo ""
+    echo "    Environment Overrides:"
+    echo "      SF_USER=myuser SF_PROJECT=myproject ANDROID_VER=16 ROM_NAME=EvolutionX ./upload.sh file.zip"
+    echo "============================================================================"
+    echo ""
     exit 0
 fi
 
