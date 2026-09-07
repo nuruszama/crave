@@ -81,6 +81,8 @@ EOF
 
 if [ $? -eq 0 ]; then
     echo -e "\n[SUCCESS] Upload finished successfully!"
+    export ROM_URL="https://sourceforge.net/projects/${SF_PROJECT}/files/${ANDROID_VER}/${ROM_NAME}/${FILE_NAME}/download"
+    export REC_URL="https://sourceforge.net/projects/${SF_PROJECT}/files/${ANDROID_VER}/${ROM_NAME}/recovery.img/download"
 else
     echo -e "\n[ERROR] Upload failed. Check network or SSH configuration."
     exit 1

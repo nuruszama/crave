@@ -20,13 +20,16 @@ VARIANTS=(
 export SF_USER="nuruszama"
 export SF_PROJECT="xiaomicreek"
 export ANDROID_VER="16"
-export LINEAGE_VER="23.2"
 export ROM_NAME="LineageOS"
+export ROM_VERSION="23.2"
+export BUILD_TYPE="userdebug"
+export DEVICE_CODENAME="creek"
 export SSH_KEY="$HOME/.ssh/id_ed25519"
 
 # Maintainer and Host Info
 export BUILD_USERNAME="nuruszama"
 export BUILD_HOSTNAME="creek"
+export BANNER="https://raw.githubusercontent.com/nuruszama/crave/creek/lineageos/LineageOS_Banner.jpg"
 
 # Custom Build Tag
 export RELEASE_TYPE="quarterly"
@@ -88,9 +91,9 @@ for VARIANT in "${VARIANTS[@]}"; do
     fi
     
     if [ "$GAPPS_CHOICE" == "gapps" ]; then
-        export WITH_GMS=true
+        export WITH_GAPPS=true
     else
-        export WITH_GMS=false
+        export WITH_GAPPS=false
     fi
 
     # Make build name unique (e.g. erofs-vanilla, ext4-vanilla, erofs-gapps)
@@ -130,6 +133,9 @@ for VARIANT in "${VARIANTS[@]}"; do
         chmod +x upload.sh
         ./upload.sh "${ROM_DIR}/${ZIP_FILE}"
         echo "Upload done for ${FS_TYPE}-${GAPPS_CHOICE}!"
+        curl -sfLo upload.sh -z post_release.sh https://raw.githubusercontent.com/nuruszama/crave/creek/tools/telegram/post_release.sh
+        chmod +x post_release.sh ; ./post_release.sh ${ROM_URL} ${REC_URL}
+        echo "release updated to telegram"
         
         # Clean uploaded zip to preserve workspace disk space
         rm -f "${ROM_DIR}/${ZIP_FILE}"

@@ -3,9 +3,20 @@ set -e
 
 clear
 
+# Export environment variables for the upload script
+export SF_USER="nuruszama"
+export SF_PROJECT="xiaomicreek"
+export ANDROID_VER="16"
+export ROM_NAME="EvolutionX"
+export ROM_VERSION="11.10"
+export BUILD_TYPE="userdebug"
+export DEVICE_CODENAME="creek"
+export SSH_KEY="$HOME/.ssh/id_ed25519"
+
 # Maintainer and Host Info
 export BUILD_USERNAME="nuruszama"
 export BUILD_HOSTNAME="creek"
+export BANNER="https://raw.githubusercontent.com/nuruszama/crave/creek/evox/EvolutionX_Banner.png"
 
 # Build Optimizations & Checks
 export SKIP_ABI_CHECKS=true
@@ -55,19 +66,13 @@ source build/envsetup.sh
 ./vendorextract.sh
 
 # Prepare device menu
-breakfast creek userdebug
+breakfast ${DEVICE_CODENAME} ${BUILD_TYPE}
 
 # Clean staging dirs
 make installclean
 
 # Start building
 m evolution
-
-# Export environment variables for the upload script
-export SF_USER="nuruszama"
-export SF_PROJECT="xiaomicreek"
-export ANDROID_VER="16"
-export ROM_NAME="EvolutionX"
 
 # Custom SSH key location (if using a different key or path)
 export SSH_KEY="$HOME/.ssh/id_ed25519"
@@ -76,10 +81,14 @@ export SSH_KEY="$HOME/.ssh/id_ed25519"
 echo "uploading file..."
 ROM_DIR="out/target/product/creek/"
 ZIP_FILE=$(ls "$ROM_DIR" | grep "${ROM_NAME}-.*.zip$" | tail -n 1)
+export BUILD_DATE=$(echo "$ZIP_FILE" | grep -oP '\b20\d{6}\b')
 if [ -n "${ZIP_FILE}" ]; then
     curl -sfLo upload.sh -z upload.sh https://raw.githubusercontent.com/nuruszama/crave/creek/tools/sf-upload.sh
     chmod +x upload.sh ; ./upload.sh "${ROM_DIR}${ZIP_FILE}"
     echo "upload done!"
+    curl -sfLo upload.sh -z post_release.sh https://raw.githubusercontent.com/nuruszama/crave/creek/tools/telegram/post_release.sh
+    chmod +x post_release.sh ; ./post_release.sh ${ROM_URL} ${REC_URL}
+    echo "release updated to telegram"
 else
     echo "no zip found at out/ dir..."
     exit 1
