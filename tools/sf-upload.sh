@@ -6,9 +6,9 @@
 # ==============================================================================
 
 # SourceForge Credentials & Keys (Overridden via environment variables if set)
-SF_USER="${SF_USER:-myuser}"                    #change with your username
-SF_PROJECT="${SF_PROJECT:-myproject}"            #change with your projectname
-SSH_KEY="${SSH_KEY:-$HOME/.ssh/id_ed25519}"        #change with your ssh key
+SF_USER="${SF_USER:-myuser}"                        #change with your username
+SF_PROJECT="${SF_PROJECT:-myproject}"               #change with your projectname
+SSH_KEY="${SSH_KEY:-$HOME/.ssh/id_ed25519}"         #change with your ssh key
 KNOWN_HOSTS="$HOME/.ssh/known_hosts"
 
 # Auto-detect Termux vs Standard Linux/macOS
@@ -21,7 +21,7 @@ fi
 # Help / Usage check
 if [ -z "$1" ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] || [ "$SF_USER" = "myuser" ] || [ "$SF_PROJECT" = "myproject" ]; then
     echo ""
-    echo "============================================================================"
+    echo "=============================================================================================================="
     echo "    Usage: ./upload.sh <file_path> [Android_Version] [ROM_Name]"
     echo ""
     echo "    Examples:"
@@ -30,7 +30,7 @@ if [ -z "$1" ] || [ "$1" == "-h" ] || [ "$1" == "--help" ] || [ "$SF_USER" = "my
     echo ""
     echo "    Environment Overrides:"
     echo "      SF_USER=myuser SF_PROJECT=myproject ANDROID_VER=16 ROM_NAME=EvolutionX ./upload.sh file.zip"
-    echo "============================================================================"
+    echo "=============================================================================================================="
     echo ""
     exit 0
 fi
