@@ -27,13 +27,13 @@ fi
 # Optional URLs passed as arguments $2 and $3, or set from environment
 ROM_URL="${2:-$ROM_DOWNLOAD_URL}"
 REC_URL="${3:-$REC_DOWNLOAD_URL}"
-SCREENSHOTS="https://t.me/creekglobal/3776"
-DISCUSSION="https://t.me/creekglobal"
+SCREENSHOTS="${SCREENSHOTS:-https://t.me/creekglobal}"
+DISCUSSION="${DISCUSSION:-https://t.me/creekglobal}"
 
-HEADER="#${ROM_NAME} #UNOFFICIAL #${DEVICE_CODENAME} #A16
+HEADER="#${ROM_NAME} #${RELEASE_TYPE} #${DEVICE_CODENAME} #A${ANDROID_VERSION}
 
-<b>${ROM_NAME}-${ROM_VERSION} for ${DEVICE_CODENAME}</b>
-• <b>Android version:</b> ${ANDROID_VERSION}
+<b>${ROM_NAME}-${ROM_VERSION} for ${DEVICE_CODENAME}</b>"
+TAGS="• <b>Android version:</b> ${ANDROID_VERSION}
 • <b>Build type:</b> ${BUILD_TYPE}
 • <b>Build date:</b> ${BUILD_DATE}"
 
@@ -50,6 +50,7 @@ FOOTER="<a href=\"${ROM_URL}\">Download</a> | <a href=\"${DISCUSSION}\">Discussi
 
 # Caption Template Assembly (HTML)
 CAPTION="${HEADER}
+<blockquote>${TAGS}</blockquote>
 <b>Changelog</b>
 <blockquote>${CHANGELOG}</blockquote>
 <b>Flashing Steps (first time)</b>
