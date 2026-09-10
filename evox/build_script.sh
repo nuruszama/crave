@@ -86,7 +86,7 @@ if [ -n "${ZIP_FILE}" ]; then
     curl -sfLo upload.sh -z upload.sh https://raw.githubusercontent.com/nuruszama/crave/creek/tools/sf-upload.sh
     chmod +x upload.sh ; ./upload.sh "${ROM_DIR}${ZIP_FILE}"
     echo "upload done!"
-    curl -sfLo upload.sh -z post_release.sh https://raw.githubusercontent.com/nuruszama/crave/creek/tools/telegram/post_release.sh
+    curl -sfLo post_release.sh -z post_release.sh https://raw.githubusercontent.com/nuruszama/crave/creek/tools/telegram/post_release.sh
     chmod +x post_release.sh ; ./post_release.sh ${ROM_URL} ${REC_URL}
     echo "release updated to telegram"
 else
