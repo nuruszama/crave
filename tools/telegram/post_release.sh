@@ -39,7 +39,7 @@ HEADER="#${ROM_NAME} #UNOFFICIAL #${DEVICE_CODENAME} #A16
 
 FLASHING_STEPS="• flash the rom with any recovery
 (keep recovery reflashing unticked if ofox)
-• reboot to the evox recovery
+• reboot to the ${ROM_NAME} recovery
 • do a format
 • reboot to system"
 
