@@ -12,10 +12,6 @@ export ROM_VERSION="11.10"
 export BUILD_TYPE="userdebug"
 export DEVICE_CODENAME="creek"
 export SSH_KEY="$HOME/.ssh/id_ed25519"
-
-# Maintainer and Host Info
-export BUILD_USERNAME="nuruszama"
-export BUILD_HOSTNAME="creek"
 export BANNER="https://raw.githubusercontent.com/nuruszama/crave/creek/evox/EvolutionX_Banner.png"
 
 # Build Optimizations & Checks
@@ -61,6 +57,10 @@ fi
 
 # Setup build env
 source build/envsetup.sh
+
+# Maintainer and Host Info
+export BUILD_USERNAME="nuruszama"
+export BUILD_HOSTNAME="creek"
 
 # Extract vendor tree
 ./vendorextract.sh
