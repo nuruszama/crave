@@ -24,6 +24,8 @@ export ROM_NAME="LineageOS"
 export ROM_VERSION="23.2"
 export BUILD_TYPE="userdebug"
 export DEVICE_CODENAME="creek"
+export SCREENSHOTS="https://t.me/creekglobal"
+export DISCUSSION="https://t.me/creekglobal"
 export SSH_KEY="$HOME/.ssh/id_ed25519"
 
 # Maintainer and Host Info
