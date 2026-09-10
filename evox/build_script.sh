@@ -12,6 +12,8 @@ export ROM_VERSION="11.10"
 export BUILD_TYPE="userdebug"
 export DEVICE_CODENAME="creek"
 export SSH_KEY="$HOME/.ssh/id_ed25519"
+export SCREENSHOTS="https://t.me/creekglobal/3776"
+export DISCUSSION="https://t.me/creekglobal"
 export BANNER="https://raw.githubusercontent.com/nuruszama/crave/creek/evox/EvolutionX_Banner.png"
 
 # Build Optimizations & Checks
