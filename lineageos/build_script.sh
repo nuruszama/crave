@@ -130,10 +130,9 @@ for VARIANT in "${VARIANTS[@]}"; do
     ZIP_FILE=$(ls "$ROM_DIR" 2>/dev/null | grep -E "^lineage-${LINEAGE_VER}-.*creek\.zip$" | tail -n 1)
     if [ -n "${ZIP_FILE}" ]; then
         curl -sfLo upload.sh https://raw.githubusercontent.com/nuruszama/crave/creek/tools/sf-upload.sh
-        chmod +x upload.sh
-        ./upload.sh "${ROM_DIR}/${ZIP_FILE}"
+        chmod +x upload.sh ; ./upload.sh "${ROM_DIR}/${ZIP_FILE}"
         echo "Upload done for ${FS_TYPE}-${GAPPS_CHOICE}!"
-        curl -sfLo upload.sh -z post_release.sh https://raw.githubusercontent.com/nuruszama/crave/creek/tools/telegram/post_release.sh
+        curl -sfLo post_release.sh -z post_release.sh https://raw.githubusercontent.com/nuruszama/crave/creek/tools/telegram/post_release.sh
         chmod +x post_release.sh ; ./post_release.sh ${ROM_URL} ${REC_URL}
         echo "release updated to telegram"
         
