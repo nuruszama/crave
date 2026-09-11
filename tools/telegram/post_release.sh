@@ -27,11 +27,12 @@ fi
 # Optional URLs passed as arguments $2 and $3, or set from environment
 ROM_URL="${2:-$ROM_URL}"
 REC_URL="${3:-$REC_URL}"
+RELEASE_TYPE="${RELEASE_TYPE:-stable}"
 SCREENSHOTS="${SCREENSHOTS:-https://t.me/creekglobal}"
 DISCUSSION="${DISCUSSION:-https://t.me/creekglobal}"
 BUILD_CONFIG="${BUILD_CONFIG:-erofs-gapps}"
 
-HEADER="#${ROM_NAME} #${RELEASE_TYPE} #${DEVICE_CODENAME} #A${ANDROID_VERSION}
+HEADER="#${ROM_NAME} #${RELEASE_TYPE} #${DEVICE_CODENAME} #A${ANDROID_VER}
 
 <b>${ROM_NAME}-${ROM_VERSION} for ${DEVICE_CODENAME}</b>"
 TAGS="• <b>Android version:</b> ${ANDROID_VERSION}
