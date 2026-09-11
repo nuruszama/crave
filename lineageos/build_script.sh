@@ -112,7 +112,7 @@ for VARIANT in "${VARIANTS[@]}"; do
     export BUILD_HOSTNAME=creek
 
     # Make build name unique (e.g. erofs-vanilla, ext4-vanilla, erofs-gapps)
-    export BUILD_TYPE="${FS_TYPE}-${GAPPS_CHOICE}"
+    export TARGET_UNOFFICIAL_BUILD_ID="${FS_TYPE}-${GAPPS_CHOICE}"
     
     # prepare device menu
     breakfast creek userdebug
