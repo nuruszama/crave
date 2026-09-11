@@ -29,13 +29,15 @@ ROM_URL="${2:-$ROM_DOWNLOAD_URL}"
 REC_URL="${3:-$REC_DOWNLOAD_URL}"
 SCREENSHOTS="${SCREENSHOTS:-https://t.me/creekglobal}"
 DISCUSSION="${DISCUSSION:-https://t.me/creekglobal}"
+BUILD_CONFIG="${BUILD_CONFIG:-erofs-gapps}"
 
 HEADER="#${ROM_NAME} #${RELEASE_TYPE} #${DEVICE_CODENAME} #A${ANDROID_VERSION}
 
 <b>${ROM_NAME}-${ROM_VERSION} for ${DEVICE_CODENAME}</b>"
 TAGS="• <b>Android version:</b> ${ANDROID_VERSION}
-• <b>Build type:</b> ${BUILD_TYPE}
-• <b>Build date:</b> ${BUILD_DATE}"
+• <b>Build type  :</b> ${BUILD_TYPE}
+• <b>Build config:</b> ${BUILD_CONFIG}
+• <b>Build date  :</b> ${BUILD_DATE}"
 
 FLASHING_STEPS="• flash the rom with any recovery
 (keep recovery reflashing unticked if ofox)
