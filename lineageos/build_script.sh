@@ -91,16 +91,6 @@ for VARIANT in "${VARIANTS[@]}"; do
         export WITH_GAPPS=false
     fi
 
-    # Maintainer and Host Info
-    export BUILD_USERNAME="nuruszama"
-    export BUILD_HOSTNAME="creek"
-
-    # Custom Build Tag
-    export RELEASE_TYPE="STABLE"
-
-    # Make build name unique (e.g. erofs-vanilla, ext4-vanilla, erofs-gapps)
-    export LINEAGE_BUILDTYPE="${FS_TYPE}-${GAPPS_CHOICE}"
-
     # Reset strings.xml so sed can find the original string every loop
     if [ -d "packages/apps/Updater" ]; then
         git -C packages/apps/Updater checkout app/src/main/res/values/strings.xml 2>/dev/null || true
@@ -117,6 +107,16 @@ for VARIANT in "${VARIANTS[@]}"; do
     # setup build env
     source build/envsetup.sh
 
+    # Maintainer and Host Info
+    export BUILD_USERNAME=nuruszama
+    export BUILD_HOSTNAME=creek
+
+    # Custom Build Tag
+    export RELEASE_TYPE=stable
+
+    # Make build name unique (e.g. erofs-vanilla, ext4-vanilla, erofs-gapps)
+    export LINEAGE_BUILDTYPE="${FS_TYPE}-${GAPPS_CHOICE}"
+    
     # prepare device menu
     breakfast creek userdebug
 
