@@ -33,7 +33,7 @@ DISCUSSION="${DISCUSSION:-https://t.me/creekglobal}"
 BUILD_CONFIG="${BUILD_CONFIG:-erofs-gapps}"
 BUILD_DATE="${BUILD_DATE:-$(shell date -u +%Y%m%d)}"
 
-HEADER="#${ROM_NAME} #${RELEASE_TYPE} #${DEVICE_CODENAME} #A${ANDROID_VER}
+HEADER="#${ROM_NAME} #${RELEASE_TYPE} #${DEVICE} #A${ANDROID_VER}
 
 <b>${ROM_NAME}-${ROM_VERSION} for ${DEVICE_CODENAME}</b>"
 TAGS="• <b>Android version:</b> ${ANDROID_VER}
