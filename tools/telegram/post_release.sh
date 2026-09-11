@@ -62,7 +62,7 @@ CAPTION="${HEADER}
 <blockquote>${CHANGELOG}</blockquote>
 <b>Flashing Steps (first time)</b>
 <blockquote>${FLASHING_STEPS}</blockquote>
-<b>Additional Credits</b>
+<b>Credits</b>
 <blockquote>${CREDITS}</blockquote>
 
 ${FOOTER}"
