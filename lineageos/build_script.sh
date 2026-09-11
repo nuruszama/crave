@@ -133,6 +133,8 @@ for VARIANT in "${VARIANTS[@]}"; do
         curl -sfLo upload.sh https://raw.githubusercontent.com/nuruszama/crave/creek/tools/sf-upload.sh
         chmod +x upload.sh ; ./upload.sh "${ROM_DIR}/${ZIP_FILE}"
         echo "Upload done for ${FS_TYPE}-${GAPPS_CHOICE}!"
+        export ROM_URL="https://sourceforge.net/projects/${SF_PROJECT}/files/${ANDROID_VER}/${ROM_NAME}/${FILE_NAME}/download"
+        export REC_URL="https://sourceforge.net/projects/${SF_PROJECT}/files/${ANDROID_VER}/${ROM_NAME}/recovery.img/download"
         curl -sfLo post_release.sh -z post_release.sh https://raw.githubusercontent.com/nuruszama/crave/creek/tools/telegram/post_release.sh
         chmod +x post_release.sh ; ./post_release.sh ${ROM_URL} ${REC_URL}
         echo "release updated to telegram"
