@@ -24,25 +24,22 @@ else
     exit 1
 fi
 
-# find build date from rom link for safety
-FALLBACK_BUILD_DATE=$(echo "$ROM_URL" | grep -oP '\b20\d{6}\b')
-
 # Optional URLs passed as arguments $2 and $3, or set from environment
 ROM_URL="${2:-$ROM_URL}"
 REC_URL="${3:-$REC_URL}"
-RELEASE_TYPE="${RELEASE_TYPE:-stable}"
+RELEASE_TYPE="${RELEASE_TYPE:-UNOFFICIAL}"
 SCREENSHOTS="${SCREENSHOTS:-https://t.me/creekglobal}"
 DISCUSSION="${DISCUSSION:-https://t.me/creekglobal}"
 BUILD_CONFIG="${BUILD_CONFIG:-erofs-gapps}"
-BUILD_DATE="${BUILD_DATE:-$FALLBACK_BUILD_DATE}"
+BUILD_DATE="${BUILD_DATE:-$(shell date -u +%Y%m%d)}"
 
 HEADER="#${ROM_NAME} #${RELEASE_TYPE} #${DEVICE_CODENAME} #A${ANDROID_VER}
 
 <b>${ROM_NAME}-${ROM_VERSION} for ${DEVICE_CODENAME}</b>"
 TAGS="• <b>Android version:</b> ${ANDROID_VER}
-• <b>Build type  :</b> ${BUILD_TYPE}
-• <b>Build config:</b> ${BUILD_CONFIG}
-• <b>Build date  :</b> ${BUILD_DATE}"
+• <b>Build type     :</b> ${BUILD_TYPE}
+• <b>Build config :</b> ${BUILD_CONFIG}
+• <b>Build date     :</b> ${BUILD_DATE}"
 
 FLASHING_STEPS="• flash the rom with any recovery
 (keep recovery reflashing unticked if ofox)
@@ -67,7 +64,7 @@ CAPTION="${HEADER}
 
 ${FOOTER}"
 
-echo "Sending build update with buttons to ${TG_CHANNEL}..."
+echo "Sending build update to ${TG_CHANNEL}..."
 
 # Send photo with caption or fall back to text message
 curl -s -X POST "https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto" \
