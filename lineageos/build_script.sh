@@ -115,7 +115,7 @@ for VARIANT in "${VARIANTS[@]}"; do
     export RELEASE_TYPE=RELEASE
 
     # Make build name unique (e.g. erofs-vanilla, ext4-vanilla, erofs-gapps)
-    export TARGET_UNOFFICIAL_BUILD_ID="${FS_TYPE}-${GAPPS_CHOICE}"
+    export LINEAGE_EXTRAVERSION="-${FS_TYPE}-${GAPPS_CHOICE}"
     
     # prepare device menu
     breakfast creek userdebug
