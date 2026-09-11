@@ -128,6 +128,7 @@ for VARIANT in "${VARIANTS[@]}"; do
     echo "uploading file..."
     ROM_DIR="out/target/product/creek/"
     ZIP_FILE=$(ls "$ROM_DIR" 2>/dev/null | grep -E "^lineage-.*creek\.zip$" | tail -n 1)
+    export BUILD_DATE=$(echo "$ZIP_FILE" | grep -oP '\b20\d{6}\b')
     if [ -n "${ZIP_FILE}" ]; then
         curl -sfLo upload.sh https://raw.githubusercontent.com/nuruszama/crave/creek/tools/sf-upload.sh
         chmod +x upload.sh ; ./upload.sh "${ROM_DIR}/${ZIP_FILE}"
