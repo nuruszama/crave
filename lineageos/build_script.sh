@@ -27,14 +27,7 @@ export DEVICE_CODENAME="creek"
 export SCREENSHOTS="https://t.me/creekglobal"
 export DISCUSSION="https://t.me/creekglobal"
 export SSH_KEY="$HOME/.ssh/id_ed25519"
-
-# Maintainer and Host Info
-export BUILD_USERNAME="nuruszama"
-export BUILD_HOSTNAME="creek"
 export BANNER="https://raw.githubusercontent.com/nuruszama/crave/creek/lineageos/LineageOS_Banner.jpg"
-
-# Custom Build Tag
-export RELEASE_TYPE="quarterly"
 
 # Build Optimizations & Checks
 export SKIP_ABI_CHECKS=true
@@ -98,6 +91,13 @@ for VARIANT in "${VARIANTS[@]}"; do
         export WITH_GAPPS=false
     fi
 
+    # Maintainer and Host Info
+    export BUILD_USERNAME="nuruszama"
+    export BUILD_HOSTNAME="creek"
+
+    # Custom Build Tag
+    export RELEASE_TYPE="STABLE"
+
     # Make build name unique (e.g. erofs-vanilla, ext4-vanilla, erofs-gapps)
     export LINEAGE_BUILDTYPE="${FS_TYPE}-${GAPPS_CHOICE}"
 
@@ -129,7 +129,7 @@ for VARIANT in "${VARIANTS[@]}"; do
     # Upload
     echo "uploading file..."
     ROM_DIR="out/target/product/creek/"
-    ZIP_FILE=$(ls "$ROM_DIR" 2>/dev/null | grep -E "^lineage-${LINEAGE_VER}-.*creek\.zip$" | tail -n 1)
+    ZIP_FILE=$(ls "$ROM_DIR" 2>/dev/null | grep -E "^lineage-.*creek\.zip$" | tail -n 1)
     if [ -n "${ZIP_FILE}" ]; then
         curl -sfLo upload.sh https://raw.githubusercontent.com/nuruszama/crave/creek/tools/sf-upload.sh
         chmod +x upload.sh ; ./upload.sh "${ROM_DIR}/${ZIP_FILE}"
