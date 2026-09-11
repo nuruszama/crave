@@ -24,6 +24,9 @@ else
     exit 1
 fi
 
+# find build date from rom link for safety
+FALLBACK_BUILD_DATE=$(echo "$ROM_URL" | grep -oP '\b20\d{6}\b')
+
 # Optional URLs passed as arguments $2 and $3, or set from environment
 ROM_URL="${2:-$ROM_URL}"
 REC_URL="${3:-$REC_URL}"
@@ -31,6 +34,7 @@ RELEASE_TYPE="${RELEASE_TYPE:-stable}"
 SCREENSHOTS="${SCREENSHOTS:-https://t.me/creekglobal}"
 DISCUSSION="${DISCUSSION:-https://t.me/creekglobal}"
 BUILD_CONFIG="${BUILD_CONFIG:-erofs-gapps}"
+BUILD_DATE="${BUILD_DATE:-$FALLBACK_BUILD_DATE}"
 
 HEADER="#${ROM_NAME} #${RELEASE_TYPE} #${DEVICE_CODENAME} #A${ANDROID_VER}
 
