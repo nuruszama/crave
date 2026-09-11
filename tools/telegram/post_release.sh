@@ -25,8 +25,8 @@ else
 fi
 
 # Optional URLs passed as arguments $2 and $3, or set from environment
-ROM_URL="${2:-$ROM_DOWNLOAD_URL}"
-REC_URL="${3:-$REC_DOWNLOAD_URL}"
+ROM_URL="${2:-$ROM_URL}"
+REC_URL="${3:-$REC_URL}"
 SCREENSHOTS="${SCREENSHOTS:-https://t.me/creekglobal}"
 DISCUSSION="${DISCUSSION:-https://t.me/creekglobal}"
 BUILD_CONFIG="${BUILD_CONFIG:-erofs-gapps}"
