@@ -24,12 +24,11 @@ fi
 
 echo "Sending build update to ${TG_PERSONAL}..."
 
-# Send photo with caption or fall back to text message
+# Send document with corrected variable and form-data upload
 curl -s -X POST "https://api.telegram.org/bot${BOT_TOKEN}/sendDocument" \
-  -d "chat_id=${TG_PERSONAL}" \
-  -d "document=$1" \
-  -d "caption=${CAPTION}" \
-  -d "parse_mode=HTML" \
-  -d "disable_web_page_preview=true"
+  -F "chat_id=${TG_PERSONAL}" \
+  -F "document=@${doc}" \
+  -F "caption=${caption}" \
+  -F "disable_web_page_preview=true"
 
 echo -e "\n[+] Release data shared to Telegram inbox."
