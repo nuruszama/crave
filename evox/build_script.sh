@@ -132,7 +132,7 @@ for VARIANT in "${VARIANTS[@]}"; do
         export ROM_URL="https://sourceforge.net/projects/${SF_PROJECT}/files/${ANDROID_VER}/${ROM_NAME}/${ZIP_FILE}/download"
         export REC_URL="https://sourceforge.net/projects/${SF_PROJECT}/files/${ANDROID_VER}/${ROM_NAME}/recovery.img/download"
         curl -sfLo post_release.sh -z post_release.sh https://raw.githubusercontent.com/nuruszama/crave/creek/tools/telegram/post_release.sh
-        chmod +x post_release.sh ; ./post_release.sh ${ROM_URL} ${REC_URL}
+        chmod +x post_release.sh ; ./post_release.sh
         echo "release updated to telegram"
     else
         echo "no zip found at out/ dir..."
